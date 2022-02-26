@@ -1,5 +1,5 @@
 import axios from "axios"
-import { APikey, endPoint } from "../constants.ts/Api"
+import { APikey, endPoint } from "../constants/Api"
 
 
 export const geTranding=async(offset:number,batchsize:number)=>

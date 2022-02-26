@@ -6,71 +6,50 @@ import { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { FlatList, TextInput } from 'react-native-gesture-handler';
 import ImageContaimer from '../components/ImageContainer';
-import * as API from "../services/GiphyApiServies";
-import tempdata from '../data/dummydata.json'
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackProps } from '../navigation/RootStackNavigator';
 import { GiphyGif } from '../Types/Giphy.D';
+import { getTrendingGifs } from '../redux/actions/TrendingActions';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../redux/store/store';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 const Home = () => {
 
-    const [data, setdata] = useState<GiphyGif[]>()
-
-    const navigation=useNavigation<StackNavigationProp<RootStackProps>>()
-
-    const getTrandingData = async () => {
-        const data = await API.geTranding(1, 3)
-      
-        const temp:GiphyGif[]=[]
-
-        
-        data.data.data.map(
-            (item:any)=>
-            {
-                temp.push(
-                    {
-                        id:item.id,
-                        height:Number(item.images.original.height),
-                        width:Number(item.images.original.width),
-                        url:item.images.original.url
-                    }
-                )
-
-            }
-        )
 
 
-        setdata(temp)
-
-    }
+    const dispatch = useAppDispatch()
+    const data = useAppSelector(state => state.Trending.data)
+    const navigation = useNavigation<StackNavigationProp<RootStackProps>>()
 
 
     useEffect
         (
             () => {
-                 getTrandingData()
-
+                dispatch(getTrendingGifs())
 
             },
             []
         )
 
 
-     type renderProps={
-        item:GiphyGif, index:number
+    type renderProps = {
+        item: GiphyGif, index: number
     }
 
-    const renderItem = ({item,index}:renderProps) => {
+    const renderItem = ({ item, index }: renderProps) => {
         return (
             <TouchableOpacity
-            style={{
-               
-                elevation:10,
-                margin:5
-            }}
+                style={{
+
+                    elevation: 10,
+                    margin: 5
+                }}
             >
-                <ImageContaimer                
-                data={item}
+                <ImageContaimer
+                    data={item}
                 />
 
             </TouchableOpacity>
@@ -81,21 +60,21 @@ const Home = () => {
 
 
             <TouchableOpacity
-                onPress={()=>navigation.navigate("Search")}
+                onPress={() => navigation.navigate("Search")}
                 style={{
-                    height:50,
-                    borderRadius:15,
-                    margin:10,
-                    elevation:2,
-                    justifyContent:"center",
-                  
-                    paddingLeft:10
+                    height: 50,
+                    borderRadius: 15,
+                    margin: 10,
+                    elevation: 2,
+                    justifyContent: "center",
+
+                    paddingLeft: 10
                 }}
             >
                 <Text
-                style={{
-                    color:"grey"
-                }}
+                    style={{
+                        color: "grey"
+                    }}
                 >Search here ....</Text>
             </TouchableOpacity>
             <FlatList
