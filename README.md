@@ -29,8 +29,8 @@ clone repo
 <div>
  <div align="center">
   <img src="screenshots/Screenshot_1645972963.png" height="400px" width="200px"/>
-   <img src="screenshots/Screenshot_1645973507.png.png" height="400px" width="200px"/>
-   <img src="screenshots/Screenshot_1645973793.png" height="400px" width="200px"/
+   <img src="screenshots/Screenshot_1645973507.png" height="400px" width="200px"/>
+   <img src="screenshots/Screenshot_1645973793.png" height="400px" width="200px">
 
 </div>
 
