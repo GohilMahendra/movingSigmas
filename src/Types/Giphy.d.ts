@@ -7,6 +7,7 @@ export type GiphyGif={
     url:string,
     height:number,
     width:number,
+   
     
     
 }

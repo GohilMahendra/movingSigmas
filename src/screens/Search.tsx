@@ -27,7 +27,7 @@ const Search = () => {
 
     const dispatch = useAppDispatch()
 
-    const ref=useRef<TextInput|null>()
+    const ref = useRef<TextInput | null>()
 
     const navigation = useNavigation<StackNavigationProp<RootStackProps, 'Search'>>()
     const data = useAppSelector(state => state.Search.searchResults)
@@ -91,24 +91,26 @@ const Search = () => {
 
     return (
         <SafeAreaView
-        style={{
-            flex:1
-        }}
+            style={{
+                flex: 1
+            }}
         >
             <TextInput
 
-              //  ref={ref}
+                //  ref={ref}
                 value={search}
                 style={{
                     height: 50,
-                    marginLeft:50,
+                    marginLeft: 50,
                     borderRadius: 15,
                     elevation: 2,
-                    margin:5,
+                    margin: 5,
                     padding: 10,
                     backgroundColor: '#fff',
 
                 }}
+
+                onSubmitEditing={() => navigation.navigate('SearchResults', { search: search })}
                 onChangeText={val => setsearch(val)}
             >
 

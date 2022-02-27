@@ -28,6 +28,9 @@ const RootStackNavigator = () => {
             >
                 <Stack.Screen
                     name='Home'
+                    options={{
+                        title:"Trending"
+                    }}
                     component={Home}
                 />
                 <Stack.Screen

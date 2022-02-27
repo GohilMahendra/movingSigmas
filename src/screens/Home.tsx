@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { View, Text, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, RefreshControl, ActivityIndicator, Dimensions } from 'react-native';
 import { FlatList, TextInput } from 'react-native-gesture-handler';
 import ImageContaimer from '../components/ImageContainer';
 import { useNavigation } from '@react-navigation/native';
@@ -17,14 +17,34 @@ const Home = () => {
     const dispatch = useAppDispatch()
     const data = useAppSelector(state => state.Trending.data)
 
+    const getorination = (): string => {
+
+        return Dimensions.get('screen').height >= Dimensions.get('screen').width ? "POTRAIT" : "LANDSCAPE"
+    }
+
+
+    const [orintation, setoriantation] = useState<string>(getorination())
 
     const loading = useAppSelector(state => state.Trending.isloading)
     const moreloading = useAppSelector(state => state.Trending.ismoreloading)
 
-    console.log(data.length,"data")
+    console.log(data.length, "data")
     const navigation = useNavigation<StackNavigationProp<RootStackProps>>()
 
 
+    useEffect(() => {
+        const dimentionListner = Dimensions.addEventListener('change', () => {
+
+            let ortn = getorination()
+            setoriantation(ortn)
+        })
+        return () => {
+            Dimensions.removeEventListener('change', () => {
+                let ortn = getorination()
+                setoriantation(ortn)
+            })
+        }
+    }, [Dimensions])
 
     useEffect
         (
@@ -40,16 +60,23 @@ const Home = () => {
     }
 
     const renderItem = ({ item, index }: renderProps) => {
+        const width = (orintation == "POTRAIT") ? Dimensions.get('window').width : Dimensions.get('window').height
+
+
+        const height = orintation == "POTRAIT" ? Dimensions.get('window').height : Dimensions.get('window').width
+
+        const imageWidth = (width / 2 < item.width) ? (width / item.width) * item.width : item.width
+
         return (
             <TouchableOpacity
                 style={{
 
                     elevation: 10,
-                    margin: 5
+                    height:item.height
                 }}
             >
                 <ImageContaimer
-                    data={item}
+                    data={{...item,width:imageWidth}}
                 />
 
             </TouchableOpacity>
@@ -57,10 +84,10 @@ const Home = () => {
     }
     return (
         <View
-        style={{
-            backgroundColor:'#fff',
-            flex:1
-        }}
+            style={{
+                backgroundColor: '#fff',
+                flex: 1
+            }}
         >
 
             <TouchableOpacity
@@ -81,6 +108,9 @@ const Home = () => {
                 >Search here ....</Text>
             </TouchableOpacity>
             <FlatList
+
+            key={orintation}
+            numColumns={orintation=="POTRAIT"?1:2}
                 refreshControl={<RefreshControl
                     onRefresh={() => dispatch(getTrendingGifs())}
                     refreshing={loading}

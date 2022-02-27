@@ -35,16 +35,12 @@ const SearchResults = () => {
 
     console.log(data.length, "lenght data")
 
-    const [temp, settemp] = useState<boolean>(false)
+
     const getSearchGifs = async () => {
         dispatch(getSearchGIFResults(route.params.search))
     }
     const getMoreSearchGifs = async () => {
 
-        if (temp)
-            return
-
-        settemp(true)
         dispatch(getMoreSearchGIFResults(route.params.search))
     }
 
@@ -98,7 +94,8 @@ const SearchResults = () => {
 
                 style={{
                     justifyContent: 'center',
-                    alignItems: "center"
+                    alignItems: "center",
+
                 }}
             >
                 <ImageContaimer
@@ -130,7 +127,7 @@ const SearchResults = () => {
                 data={data}
 
 
-                //    onEndReached={() => getMoreSearchGifs()}
+                onEndReached={() => getMoreSearchGifs()}
                 renderItem={renderItem}
                 ListFooterComponent={
                     <ActivityIndicator

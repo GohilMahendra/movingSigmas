@@ -36,7 +36,7 @@ export const getSearchGIFResults = (
           type: GET_SEARCH_SUCCESS,
           payload: {
             data: temp,
-            offset: temp.length,
+            offset: response.data.pagination.count,
             totalCount: response.data.pagination.total_count,
           },
         });
@@ -73,8 +73,8 @@ export const getMoreSearchGIFResults = (
       response.data.data.map((item: any) => {
         temp.push({
           id: item.id,
-          height: Number(item.images.fixed_width_small.height),
-          width: Number(item.images.fixed_width_small.width),
+          height: Number(item.images.original.height),
+          width: Number(item.images.original.width),
           url: item.images.original.url,
         });
 
@@ -83,7 +83,7 @@ export const getMoreSearchGIFResults = (
           payload: {
             data: temp,
             offset: response.data.pagination.count + response.data.pagination.offset,
-            totalCount: response.data.pagination.total_count,
+          //  totalCount: response.data.pagination.total_count,
           },
         });
       });

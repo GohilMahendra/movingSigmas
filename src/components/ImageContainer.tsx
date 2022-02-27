@@ -15,34 +15,30 @@ const ImageContaimer = (Props: PropTypes) => {
     const { data } = Props
     return (
         <View
-        style={{
-            justifyContent:"center",
-            alignItems:"center",
-            flex:1,
-            backgroundColor:'black'
-        }}
-        >
-        <Image
-            source={{
-                uri: data.url,
-
-            }}
-
-           
-
             style={{
-                //   flex: 1,
-                height: data.height,
-                width: data.width,
-                alignSelf: "center",
-
-
-
+                justifyContent: "center",
+                alignItems: "center",
+                flex: 1,
+                // backgroundColor:'black'
             }}
-
-            resizeMode='contain'
         >
-        </Image>
+            <Image
+                source={{
+                    uri: data.url,
+
+                }}
+
+
+
+                style={{
+                    //   flex: 1,
+                    height: data.height,
+                    width: data.width,
+                    alignSelf: "center",
+                }}
+                resizeMode='contain'
+            >
+            </Image>
         </View>
 
     )
