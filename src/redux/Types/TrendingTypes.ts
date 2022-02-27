@@ -11,29 +11,24 @@ export const GET_MORE_TRENDING_VIDEOS_SUCCESS =
 export const GET_MORE_TRENDING_VIDEOS_FAILED =
   "GET_MORE_TRENDING_VIDEOS_FAILED";
 
-
-type GiphySuccessPayload= {
+type GiphySuccessPayload = {
   data: GiphyGif[];
   totalPages: number;
   offset: number;
 };
-interface TrendingVideoSuccessAction {
-  readonly type: string;
-  payload:GiphySuccessPayload
-};
-
-interface TrendgVideoFailedAction  {
-  readonly type: string;
-  payload: {
-    error: string;
-  };
-};
-interface TrendgVideoLoadingAction  {
-  readonlytype: string;
-  
-};
 
 export type TrendingactionType =
-  | TrendgVideoLoadingAction
-  | TrendgVideoFailedAction
-  | TrendingVideoSuccessAction;
+  | {
+      readonly type: string;
+      payload: GiphySuccessPayload;
+    }
+  | {
+      readonly type: string;
+      payload: {
+        error: string;
+      };
+    }
+  | {
+      readonly type: string;
+      payload:undefined
+    };

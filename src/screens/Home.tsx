@@ -3,33 +3,33 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native';
 import { FlatList, TextInput } from 'react-native-gesture-handler';
 import ImageContaimer from '../components/ImageContainer';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackProps } from '../navigation/RootStackNavigator';
 import { GiphyGif } from '../Types/Giphy.D';
-import { getTrendingGifs } from '../redux/actions/TrendingActions';
+import { getMoreTrendingGifs, getTrendingGifs } from '../redux/actions/TrendingActions';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../redux/store/store';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
+import { useSafeArea } from 'react-native-safe-area-context';
 const Home = () => {
-
-
-
     const dispatch = useAppDispatch()
     const data = useAppSelector(state => state.Trending.data)
+
+
+    const loading = useAppSelector(state => state.Trending.isloading)
+    const moreloading = useAppSelector(state => state.Trending.ismoreloading)
+
+    console.log(data.length,"data")
     const navigation = useNavigation<StackNavigationProp<RootStackProps>>()
+
 
 
     useEffect
         (
             () => {
                 dispatch(getTrendingGifs())
-
             },
             []
         )
@@ -58,7 +58,6 @@ const Home = () => {
     return (
         <View>
 
-
             <TouchableOpacity
                 onPress={() => navigation.navigate("Search")}
                 style={{
@@ -67,7 +66,6 @@ const Home = () => {
                     margin: 10,
                     elevation: 2,
                     justifyContent: "center",
-
                     paddingLeft: 10
                 }}
             >
@@ -78,20 +76,40 @@ const Home = () => {
                 >Search here ....</Text>
             </TouchableOpacity>
             <FlatList
-                data={data}
+                refreshControl={<RefreshControl
+                    onRefresh={() => dispatch(getTrendingGifs())}
+                    refreshing={loading}
+                ></RefreshControl>}
 
+                data={data}
                 style={{
-                    margin: 5,
+                    margin: 5
 
                 }}
-                numColumns={2}
+
+                maxToRenderPerBatch={5}
+
+                ListFooterComponent={
+                    <ActivityIndicator
+                        animating={moreloading}
+                        size={'large'}
+                        color={'black'}
+                        style={{
+                            justifyContent: "center",
+                            alignItems: 'center',
+                            alignSelf: "center"
+                        }}
+                    ></ActivityIndicator>
+                }
+
+                onEndReached={() => dispatch(getMoreTrendingGifs())}
                 renderItem={renderItem}
-
-
                 keyExtractor={item => item.id}
 
 
             ></FlatList>
+
+
 
 
 

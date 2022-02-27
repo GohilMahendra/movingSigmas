@@ -16,6 +16,7 @@ export type intialTrendingStateTypes = {
   data: GiphyGif[];
   isloading: boolean;
   ismoreloading: boolean;
+  lastOffset: number;
   totalitems: number;
   loadingError: string | null;
   moreloadingError: string | null;
@@ -24,6 +25,7 @@ export type intialTrendingStateTypes = {
 const initialState: intialTrendingStateTypes = {
   data: [],
   isloading: false,
+  lastOffset: 0,
   ismoreloading: false,
   loadingError: null,
   moreloadingError: null,
@@ -39,14 +41,17 @@ const TrendingReducer = (
       return {
         ...state,
         isloading: true,
-        
+
         loadingError: null,
       };
 
     case GET_TRENDING_VIDEOS_SUCCESS:
+     
       return {
         ...state,
         isloading: false,
+        lastOffset: action.payload.offset,
+        totalitems: action.payload.totalPages,
         data: action.payload.data,
       };
     case GET_TRENDING_VIDEOS_FAILED:
@@ -56,12 +61,20 @@ const TrendingReducer = (
       };
 
     case GET_MORE_TRENDING_VIDEOS_REQUEST:
+      return {
+        ...state,
+        ismoreloading:true,
+
+
+      }
 
     case GET_MORE_TRENDING_VIDEOS_SUCCESS:
+    //  console.log(action.payload)
       return {
         ...state,
         data: [...state.data, ...action.payload.data],
         ismoreloading: false,
+        lastOffset: action.payload.offset,
       };
     case GET_MORE_TRENDING_VIDEOS_FAILED:
       return {

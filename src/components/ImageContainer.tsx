@@ -1,48 +1,37 @@
 import * as React from 'react';
 
 import { View, Image, Text } from 'react-native';
-import { GiphyGif } from '../Types/Giphy.D';
-
-import {
-    useAppDispatch,
-    useAppSelector
-} from '../hooks/hooks'
+import { GiphyGif } from '../Types/Giphy';
 
 export type PropTypes = {
     data: GiphyGif
 }
 const ImageContaimer = (Props: PropTypes) => {
 
-
     const { data } = Props
-
     return (
         <View
             style={{
                 elevation: 10,
+                borderRadius: 15,
                 height: data.height,
-                width: data.width,
-                borderRadius: 15
+                width: data.width
 
             }}
         >
 
             <Image
-
                 source={{
                     uri: data.url,
-
-
                 }}
-
                 style={{
-                    flex: 1,
+                    //   flex: 1,
+                    height: data.height,
+                    width: data.width,
                     backgroundColor: "skyblue"
-
                 }}
                 resizeMode='cover'
             >
-
             </Image>
 
         </View>
