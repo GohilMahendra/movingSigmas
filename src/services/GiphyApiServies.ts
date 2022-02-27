@@ -24,3 +24,21 @@ export const SearchSuggestions = async (search: string) => {
 
   return response;
 };
+
+export const getSearchResults = async (
+  offset: number,
+  batchsize: number,
+  term: string
+) => {
+  const response = await axios.get(endPoint + "/search", {
+    params: {
+      api_key: APikey,
+      limit: batchsize,
+      offset: offset,
+      q: term,
+   
+    },
+  });
+
+  return response;
+};

@@ -1,26 +1,47 @@
+import { useNavigationState } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import {
     View,
-    Text
+    Text,
+    TextInput
 } from 'react-native';
-import { FlatList, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { RootStackProps } from '../navigation/RootStackNavigator';
 import { getSearchSuggetions } from '../redux/actions/SearchActions';
 import { term } from '../Types/Search';
 
+import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRef } from 'react';
+import { MutableRefObject } from 'react';
+
 
 const Search = () => {
-
 
 
     const [search, setsearch] = useState<string>("")
 
     const dispatch = useAppDispatch()
 
+    const ref=useRef<TextInput|null>()
+
+    const navigation = useNavigation<StackNavigationProp<RootStackProps, 'Search'>>()
     const data = useAppSelector(state => state.Search.searchResults)
-    console.log(data)
+
+
+    // useEffect(
+    // ()=>
+    // {
+
+    //     ref.current.?focus=true
+    // },
+    // []
+    // )
+
 
     useEffect(
         () => {
@@ -44,21 +65,24 @@ const Search = () => {
 
         return (
             <TouchableOpacity
-            style={{
-                elevation:2,
-                backgroundColor:"#fff",
-                height:50,
-                margin:5,
-                borderRadius:15,
-                justifyContent:"center",
-                padding:10
-            
-            }}
+
+                style={{
+                    elevation: 2,
+                    backgroundColor: "#fff",
+                    height: 50,
+                    margin: 5,
+                    borderRadius: 15,
+                    justifyContent: "center",
+                    padding: 10
+
+                }}
+
+                onPress={() => navigation.replace("SearchResults", { search: item })}
             >
                 <Text
-                style={{
-                    fontSize:15
-                }}
+                    style={{
+                        fontSize: 15
+                    }}
                 >{item}</Text>
             </TouchableOpacity>
         )
@@ -66,14 +90,21 @@ const Search = () => {
     }
 
     return (
-        <View>
+        <SafeAreaView
+        style={{
+            flex:1
+        }}
+        >
             <TextInput
 
+              //  ref={ref}
                 value={search}
                 style={{
                     height: 50,
+                    marginLeft:50,
                     borderRadius: 15,
                     elevation: 2,
+                    margin:5,
                     padding: 10,
                     backgroundColor: '#fff',
 
@@ -90,7 +121,7 @@ const Search = () => {
 
 
             ></FlatList>
-        </View>
+        </SafeAreaView>
     )
 
 }

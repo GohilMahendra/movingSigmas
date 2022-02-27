@@ -4,13 +4,17 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import Home from '../screens/Home';
 import Search from '../screens/Search';
+import SearchResults from '../screens/SearchResults';
 
 
 
 
 export type RootStackProps = {
     Home: undefined,
-    Search:undefined,
+    Search: undefined,
+    SearchResults: {
+        search: string
+    }
 }
 
 const RootStackNavigator = () => {
@@ -28,7 +32,19 @@ const RootStackNavigator = () => {
                 />
                 <Stack.Screen
                     name='Search'
+                    options={{
+
+                        headerTransparent: true,
+                        title:""
+                    }}
                     component={Search}
+                />
+                <Stack.Screen
+                    name='SearchResults'
+                    options={{
+                        title: ""
+                    }}
+                    component={SearchResults}
                 />
 
 

@@ -26,7 +26,7 @@ export const getSearchSuggetions = (
       dispatch({
         type: GET_SEARCH_SUGGETION_SUCCESS,
         payload: {
-          data: terms,
+          data: terms
         },
       });
     } catch (err) {
@@ -34,7 +34,7 @@ export const getSearchSuggetions = (
       dispatch({
         type: GET_SEARCH_SUGGETION_FAILES,
         payload: {
-          error: "erro in search," + JSON.stringify(err),
+          error: "error in search," + JSON.stringify(err),
         },
       });
     }

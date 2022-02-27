@@ -69,7 +69,7 @@ export const getMoreTrendingGifs = (): ThunkAction<
       const lastOffeset = getState().Trending.lastOffset;
 
       console.log(lastOffeset, total);
-      if (lastOffeset >= total) {
+      if (lastOffeset > total) {
         return;
       }
 
