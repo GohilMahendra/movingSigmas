@@ -2,9 +2,11 @@ import TrendingReducer from "../reducers/TrendingReducer";
 
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk,{ThunkAction, ThunkMiddleware} from "redux-thunk";
+import SearchReducer from "../reducers/SearchReducer";
 
 const RootReducer = combineReducers({
  Trending: TrendingReducer,
+ Search:SearchReducer,
 });
 
 const middleware = applyMiddleware(thunk as ThunkMiddleware);

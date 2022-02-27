@@ -13,9 +13,14 @@ export const geTranding = async (offset: number, batchsize: number) => {
   return response;
 };
 
-// export const SearchSuggestions=(search:string)=>
-// {
-//     const response=await axios.get(
-//         endPoint+
-//     )
-// }
+export const SearchSuggestions = async (search: string) => {
+  const response = await axios.get(endPoint + "/search/tags", {
+    params: {
+      api_key: APikey,
+      q: search,
+      limit: 10,
+    },
+  });
+
+  return response;
+};

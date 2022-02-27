@@ -15,6 +15,7 @@ const ImageContaimer = (Props: PropTypes) => {
                 elevation: 10,
                 borderRadius: 15,
                 height: data.height,
+                alignSelf:"center",
                 width: data.width
 
             }}

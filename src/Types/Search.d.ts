@@ -1,2 +1,4 @@
 
 
+
+export type term=string
