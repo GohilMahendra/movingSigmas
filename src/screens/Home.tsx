@@ -97,6 +97,7 @@ const Home = () => {
                     borderRadius: 15,
                     margin: 10,
                     elevation: 2,
+                    backgroundColor:"#fff",
                     justifyContent: "center",
                     paddingLeft: 10
                 }}

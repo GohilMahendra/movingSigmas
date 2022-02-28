@@ -99,6 +99,7 @@ const Search = () => {
 
                 //  ref={ref}
                 value={search}
+                autoFocus={true}
                 style={{
                     height: 50,
                     marginLeft: 50,

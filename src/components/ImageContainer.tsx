@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { View, Dimensions, Image, Text, ActivityIndicator } from 'react-native';
+import { useStore } from 'react-redux';
 import { GiphyGif } from '../Types/Giphy';
 
 
@@ -13,6 +14,8 @@ export type PropTypes = {
 const ImageContaimer = (Props: PropTypes) => {
 
     const { data } = Props
+
+    const [load, setload] = React.useState(false)
     return (
         <View
             style={{
@@ -28,7 +31,8 @@ const ImageContaimer = (Props: PropTypes) => {
 
                 }}
 
-
+                onLoadStart={() => setload(true)}
+                onLoadEnd={() => setload(false)}
 
                 style={{
                     //   flex: 1,
@@ -39,6 +43,21 @@ const ImageContaimer = (Props: PropTypes) => {
                 resizeMode='contain'
             >
             </Image>
+
+            <ActivityIndicator
+
+                animating={load}
+                size="large"
+                color={"black"}
+                style={{
+                    position: "absolute",
+                    alignSelf: "center",
+                    top: "40%"
+                }}
+
+            >
+
+            </ActivityIndicator>
         </View>
 
     )
